@@ -17,14 +17,14 @@ class DatabaseSchema {
   @Column({ type: 'varchar', nullable: true, default: 'very-high' })
   priority?: string
 
-  @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt?: Date
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created_at?: Date
 
-  @Column({ name: 'updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  updatedAt?: Date
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updated_at?: Date
 
-  @Column({ name: 'deleted_at', type: 'timestamp', nullable: true })
-  deletedAt?: Date
+  @Column({ type: 'timestamp', nullable: true })
+  deleted_at?: Date
 }
 
 @Entity()
