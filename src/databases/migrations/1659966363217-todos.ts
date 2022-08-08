@@ -8,7 +8,7 @@ export class todos1659966363217 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'binary',
+            type: 'int',
             isPrimary: true,
             isUnique: true,
             isNullable: false,
@@ -35,24 +35,23 @@ export class todos1659966363217 implements MigrationInterface {
             name: 'priority',
             type: 'varchar',
             isNullable: true,
-            enum: ['very-high', 'high', 'normal', 'low'],
-            default: 'very-hight'
+            default: 'very-high'
           },
           {
             name: 'created_at',
-            type: 'timestampz',
+            type: 'timestamp',
             isNullable: true,
-            default: 'now()'
+            default: 'CURRENT_TIMESTAMP'
           },
           {
             name: 'updated_at',
-            type: 'timestampz',
+            type: 'timestamp',
             isNullable: true,
-            default: 'now()'
+            default: 'CURRENT_TIMESTAMP'
           },
           {
             name: 'deleted_at',
-            type: 'timestampz',
+            type: 'timestamp',
             isNullable: true
           }
         ]

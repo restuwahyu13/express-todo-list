@@ -8,7 +8,7 @@ export class activityGroups1659966354611 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'binary',
+            type: 'int',
             isPrimary: true,
             isUnique: true,
             unsigned: true,
@@ -26,19 +26,19 @@ export class activityGroups1659966354611 implements MigrationInterface {
           },
           {
             name: 'created_at',
-            type: 'timestampz',
+            type: 'timestamp',
             isNullable: true,
-            default: 'now()'
+            default: 'CURRENT_TIMESTAMP'
           },
           {
             name: 'updated_at',
-            type: 'timestampz',
+            type: 'timestamp',
             isNullable: true,
-            default: 'now()'
+            default: 'CURRENT_TIMESTAMP'
           },
           {
             name: 'deleted_at',
-            type: 'timestampz',
+            type: 'timestamp',
             isNullable: true
           }
         ]

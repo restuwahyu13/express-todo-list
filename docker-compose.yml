@@ -25,7 +25,7 @@ services:
   # DATABASE SERVICE ENVIRONMENT
   ##############################
   database:
-    image: postgres:14-alpine
+    image: mysql:8.0.30-debian
     restart: always
     healthcheck:
       start_period: 60s
@@ -34,13 +34,14 @@ services:
       test: echo ${USER}
     env_file: .env
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DBNAME}
     ports:
-      - 5432:5432
+      - 3306:3306
     volumes:
-      - database:/var/lib/postgresql/data
+      - database:/var/lib/mysql
     networks:
       - node_networks
 # #############################

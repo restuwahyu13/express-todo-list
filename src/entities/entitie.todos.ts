@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, DeleteDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { ITodos } from '@interfaces/interface.todos'
 
 class DatabaseSchema {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
+  @PrimaryGeneratedColumn()
   id!: number
 
   @Column({ type: 'int', nullable: false })
@@ -14,16 +14,16 @@ class DatabaseSchema {
   @Column({ type: 'boolean', nullable: true, default: true })
   is_active?: boolean
 
-  @Column({ type: 'varchar', nullable: true, enum: ['very-high', 'high', 'normal', 'low'], default: 'very-high' })
+  @Column({ type: 'varchar', nullable: true, default: 'very-high' })
   priority?: string
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: new Date() })
+  @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt?: Date
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', default: new Date() })
+  @Column({ name: 'updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt?: Date
 
-  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'deleted_at', type: 'timestamp', nullable: true })
   deletedAt?: Date
 }
 
