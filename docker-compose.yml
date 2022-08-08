@@ -1,0 +1,55 @@
+version: '3'
+services:
+  #####################################
+  # APPLICATION APP SERVICE ENVIRONMENT
+  #####################################
+  app:
+    build: .
+    restart: always
+    healthcheck:
+      start_period: 60s
+      timeout: 120s
+      interval: 30s
+      test: echo ${USER}
+    ports:
+      - 3000:3000
+    env_file: .env
+    depends_on:
+      - database
+    volumes:
+      - ./:/usr/share/app
+      - /usr/share/app/node_modules
+    networks:
+      - node_networks
+  ##############################
+  # DATABASE SERVICE ENVIRONMENT
+  ##############################
+  database:
+    image: postgres:14-alpine
+    restart: always
+    healthcheck:
+      start_period: 60s
+      timeout: 120s
+      interval: 30s
+      test: echo ${USER}
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - node_networks
+# #############################
+# # VOLUME PERSISTENT DATA
+# #############################
+volumes:
+  database:
+    #############################
+    # NETWORKS SHARING GROUP
+    #############################
+networks:
+  node_networks:
