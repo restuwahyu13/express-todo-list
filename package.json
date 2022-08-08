@@ -1,7 +1,7 @@
 {
   "name": "express-todo-list",
   "version": "1.0.0",
-  "description": "Tenical test freelance from Skyshi Digital Indonesia",
+  "description": "Tecnical test freelance from Skyshi Digital Indonesia",
   "main": "./dist/main.js",
   "scripts": {
     "ts-bin": "ts-node -r tsconfig-paths/register",
