@@ -15,7 +15,7 @@ export class TodosService {
       if (!checkActivityId) throw apiResponse('Not Found', `Activity with activity_group_id ${body.activity_group_id} Not Found`)
 
       await this.model.insert({ title: body.title, activity_group_id: checkActivityId.id })
-      const getTodo: Todos = await this.model.findOne({ title: body.title }, { select: ['id', 'activity_group_id', 'title', 'createdAt', 'updatedAt'] })
+      const getTodo: Todos = await this.model.findOne({ title: body.title }, { select: ['id', 'activity_group_id', 'title', 'created_at', 'updated_at'] })
 
       return Promise.resolve(apiResponse('Success', 'Success', getTodo))
     } catch (e: any) {

@@ -4,7 +4,7 @@ export interface ITodos {
   title: string
   is_active?: boolean
   priority?: string
-  createdAt?: Date
-  updatedAt?: Date
-  deletedAt?: Date
+  created_at?: Date
+  updated_at?: Date
+  deleted_at?: Date
 }

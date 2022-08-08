@@ -10,7 +10,7 @@ export class ActivityGroupsService {
   async createActivityGroups(body: DTOActivityGroups): Promise<APIResponse> {
     try {
       await this.model.insert({ title: body.title, email: body.email })
-      const getActivityRes: ActivityGroups = await this.model.findOne({ email: body.email }, { select: ['id', 'title', 'email', 'createdAt', 'updatedAt'] })
+      const getActivityRes: ActivityGroups = await this.model.findOne({ email: body.email }, { select: ['id', 'title', 'email', 'created_at', 'updated_at'] })
 
       return Promise.resolve(apiResponse('Success', 'Success', getActivityRes))
     } catch (e: any) {

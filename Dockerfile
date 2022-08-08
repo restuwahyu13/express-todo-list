@@ -19,6 +19,7 @@ RUN rm -rf node_modules \
   && npm config set fetch-retry-maxtimeout 12000000 \
   && npm config set fetch-timeout 30000000 \
   && npm i --loglevel verbose --no-audit --legacy-peer-deps \
+  && npm i pm2 -g \
   && npm run build
 EXPOSE 3000
-CMD npm start
+CMD npm run start:docker

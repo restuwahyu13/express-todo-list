@@ -34,6 +34,7 @@
     "noUnusedLocals": false,
     "isolatedModules": false,
     "sourceMap": true,
+    "allowJs": true,
     "strictNullChecks": false,
     "noEmit": false,
     "noImplicitAny": false,
