@@ -1,4 +1,5 @@
 import { StatusCodes as status } from 'http-status-codes'
+import { Request } from 'express'
 
 import { Todos } from '@entities/entitie.todos'
 import { ActivityGroups } from '@entities/entitie.activityGroups'
@@ -27,12 +28,17 @@ export class TodosService {
     }
   }
 
-  async getAllTodos(): Promise<APIResponse> {
+  async getAllTodos(req: Request): Promise<APIResponse> {
     try {
-      const getAllTodos: Todos[] = await this.model.find({})
-      if (!getAllTodos.length) throw apiResponse(status.NOT_FOUND, `Todo data Not Found`)
+      let getAllTodosResult: Todos[]
 
-      return Promise.resolve(apiResponse(status.OK, 'Success', getAllTodos))
+      if (Object.keys(req.params).length) {
+        getAllTodosResult = await this.model.find({})
+      } else {
+        getAllTodosResult = await this.model.find({ id: req.params['id'] as any })
+      }
+
+      return Promise.resolve(apiResponse(status.OK, 'Success', getAllTodosResult))
     } catch (e: any) {
       return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
     }
@@ -40,7 +46,7 @@ export class TodosService {
 
   async getTodosById(params: DTOTodosId): Promise<APIResponse> {
     try {
-      const getTodoById: Todos = await this.model.findOne({ id: params.id })
+      const getTodoById: Todos = await this.model.findOne({ id: params.id }, { order: { id: 'DESC' } })
       if (!getTodoById) throw apiResponse(status.NOT_FOUND, `Todo with ID ${params.id} Not Found`)
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getTodoById))
@@ -67,8 +73,11 @@ export class TodosService {
       const checkTodoById: Todos = await this.model.findOne({ id: params.id })
       if (!checkTodoById) throw apiResponse(status.NOT_FOUND, `Todo with ID ${params.id} Not Found`)
 
-      await this.model.update({ id: params.id }, { title: body.title, activity_group_id: body.activity_group_id })
-      const getTodoById: Todos = await this.model.findOne({ id: checkTodoById.id }, { order: { id: 'DESC' } })
+      if (body.hasOwnProperty('title') || body.hasOwnProperty('activity_group_id')) {
+        await this.model.update({ id: checkTodoById.id }, { title: body.title, activity_group_id: checkTodoById.activity_group_id })
+      }
+
+      const getTodoById: Todos = await this.model.findOne({ id: params.id })
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getTodoById))
     } catch (e: any) {

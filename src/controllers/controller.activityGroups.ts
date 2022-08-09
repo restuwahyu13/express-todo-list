@@ -12,6 +12,7 @@ export class ActivityGroupsController {
 
   createActivityGroups(): Handler {
     return async (req: Request, res: Response, next: NextFunction): Promise<OutgoingMessage> => {
+      console.log('createActivityGroups', req.body)
       try {
         const response: APIResponse = await this.service.createActivityGroups(rawParser(req.body))
         return res.status(response.statusCode).json(response)
@@ -43,10 +44,10 @@ export class ActivityGroupsController {
     }
   }
 
-  deleteActivityGroupsById(): Handler {
+  updateActivityGroupsById(): Handler {
     return async (req: Request, res: Response, next: NextFunction): Promise<OutgoingMessage> => {
       try {
-        const response: APIResponse = await this.service.deleteActivityGroupsById(req.params as any)
+        const response: APIResponse = await this.service.updateActivityGroupsById(req.params as any, rawParser(req.body))
         return res.status(response.statusCode).json(response)
       } catch (e: any) {
         return res.status(e.statusCode).json(e)
@@ -54,10 +55,10 @@ export class ActivityGroupsController {
     }
   }
 
-  updateActivityGroupsById(): Handler {
+  deleteActivityGroupsById(): Handler {
     return async (req: Request, res: Response, next: NextFunction): Promise<OutgoingMessage> => {
       try {
-        const response: APIResponse = await this.service.updateActivityGroupsById(req.params as any, rawParser(req.body))
+        const response: APIResponse = await this.service.deleteActivityGroupsById(req.params as any)
         return res.status(response.statusCode).json(response)
       } catch (e: any) {
         return res.status(e.statusCode).json(e)

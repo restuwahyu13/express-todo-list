@@ -4,6 +4,7 @@ import { ActivityGroups } from '@entities/entitie.activityGroups'
 import { Inject, Service, Repository } from '@helpers/helper.di'
 import { apiResponse, APIResponse } from '@helpers/helper.apiResponse'
 import { DTOActivityGroups, DTOActivityGroupsId } from '@dtos/dto.activityGroups'
+import { IsNull, Not } from 'typeorm'
 
 @Service()
 export class ActivityGroupsService {
@@ -38,6 +39,24 @@ export class ActivityGroupsService {
       const getActivityById: ActivityGroups = await this.model.findOne({ id: params.id })
       if (!getActivityById) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
 
+      console.log('getActivityById', getActivityById)
+
+      return Promise.resolve(apiResponse(status.OK, 'Success', getActivityById))
+    } catch (e: any) {
+      return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
+    }
+  }
+
+  async updateActivityGroupsById(params: DTOActivityGroupsId, body: DTOActivityGroups): Promise<APIResponse> {
+    try {
+      const checkActivityId: ActivityGroups = await this.model.findOne({ id: params.id })
+      if (!checkActivityId) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
+
+      checkActivityId.title = body.title
+
+      await this.model.update({ id: checkActivityId.id }, { title: checkActivityId.title, email: checkActivityId.email })
+      const getActivityById: ActivityGroups = await this.model.findOne({ where: { id: checkActivityId.id } })
+
       return Promise.resolve(apiResponse(status.OK, 'Success', getActivityById))
     } catch (e: any) {
       return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
@@ -52,20 +71,6 @@ export class ActivityGroupsService {
       await this.model.delete({ id: getActivityById.id })
 
       return Promise.resolve(apiResponse(status.OK, 'Success'))
-    } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
-    }
-  }
-
-  async updateActivityGroupsById(params: DTOActivityGroupsId, body: DTOActivityGroups): Promise<APIResponse> {
-    try {
-      const checkActivityId: ActivityGroups = await this.model.findOne({ id: params.id })
-      if (!checkActivityId) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
-
-      await this.model.update({ id: params.id }, { title: body.title, email: body.email })
-      const getActivityById: ActivityGroups = await this.model.findOne({ id: checkActivityId.id, email: body.email }, { order: { id: 'DESC' } })
-
-      return Promise.resolve(apiResponse(status.OK, 'Success', getActivityById))
     } catch (e: any) {
       return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
     }

@@ -13,8 +13,8 @@ export class ActivityGroupsRoute {
     this.router.post('/', this.controller.createActivityGroups())
     this.router.get('/', this.controller.getAllActivityGroups())
     this.router.get('/:id', this.controller.getActivityGroupsById())
-    this.router.delete('/:id', this.controller.deleteActivityGroupsById())
     this.router.patch('/:id', this.controller.updateActivityGroupsById())
+    this.router.delete('/:id', this.controller.deleteActivityGroupsById())
 
     return this.router
   }
