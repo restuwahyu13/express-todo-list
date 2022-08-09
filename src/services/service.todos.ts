@@ -1,12 +1,12 @@
 import { StatusCodes as status } from 'http-status-codes'
 import { Request } from 'express'
+import { DeleteResult } from 'typeorm'
 
 import { Todos } from '@entities/entitie.todos'
 import { ActivityGroups } from '@entities/entitie.activityGroups'
 import { Inject, Service, Repository } from '@helpers/helper.di'
 import { apiResponse, APIResponse } from '@helpers/helper.apiResponse'
 import { DTOTodos, DTOTodosId } from '@dtos/dto.todos'
-import { DeleteResult, InsertResult, UpdateResult } from 'typeorm'
 
 @Service()
 export class TodosService {
@@ -29,7 +29,7 @@ export class TodosService {
 
       return Promise.resolve(apiResponse(status.CREATED, 'Success', insertData))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 
@@ -45,7 +45,7 @@ export class TodosService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getAllTodosResult))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 
@@ -56,7 +56,7 @@ export class TodosService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getTodoById))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 
@@ -70,7 +70,7 @@ export class TodosService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success'))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 
@@ -95,7 +95,7 @@ export class TodosService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getDataTodo))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 }

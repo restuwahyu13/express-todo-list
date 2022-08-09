@@ -12,7 +12,7 @@ dk-deploy:
 	${DOCKER} push 705471/node-todo:latest
 
 dk-run:
-	${DOCKER} run --name node-todo -p 3000:3000 --restart always --env-file .env -d 705471/node-todo:latest
+	${DOCKER} run --name node-todo -p 3030:3030 --restart always --env-file .env -d 705471/node-todo:latest
 
 dk-test:
 	${DOCKER} run -e API_URL=http://192.168.1.19:3030 monsterup/devcode-unit-test-1

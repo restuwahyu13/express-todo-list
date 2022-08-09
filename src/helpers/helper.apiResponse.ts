@@ -9,7 +9,7 @@ export interface APIResponse {
 
 export const apiResponse = (statusCode: number, message: string, data?: any): APIResponse => {
   return {
-    statusCode: [200, 201].includes(statusCode) ? statusCode : statusCode,
+    statusCode: statusCode,
     status: [200, 201].includes(statusCode) ? 'Success' : STATUS_CODES[statusCode],
     message: message,
     data: data || {}

@@ -11,7 +11,6 @@
     "typeorm:cli": "npm run ts-bin ./node_modules/typeorm/cli.js",
     "cleanup": "rimraf dist",
     "start": "node dist/main.js",
-    "start:docker": "pm2-runtime pm2.config.js",
     "build": "npm run cleanup && npm run ts-bin:prod",
     "dev": "npm run ts-bin:dev",
     "seed:config": "npm run typeorm:seeding config",

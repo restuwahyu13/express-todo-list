@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import 'dotenv/config'
-// import 'express-async-errors'
+import 'express-async-errors'
 import express, { Express, Request, Response } from 'express'
 import http, { OutgoingMessage, Server } from 'http'
 import { StatusCodes as status } from 'http-status-codes'
@@ -42,9 +42,9 @@ class App {
   }
 
   private middleware(): void {
-    this.app.use(express.json({ limit: '1mb' }))
-    this.app.use(express.raw({ inflate: true, limit: '1mb', type: 'application/json' }))
-    this.app.use(express.urlencoded({ extended: true }))
+    this.app.use(bodyParser.json({ limit: '1mb' }))
+    this.app.use(bodyParser.raw({ inflate: true, limit: '1mb', type: 'application/json' }))
+    this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.use(helmet({ contentSecurityPolicy: false }))
     this.app.use(hpp({ checkBody: true, checkQuery: true }))
     this.app.use(

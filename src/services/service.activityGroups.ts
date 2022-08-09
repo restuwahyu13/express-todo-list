@@ -23,7 +23,7 @@ export class ActivityGroupsService {
 
       return Promise.resolve(apiResponse(status.CREATED, 'Success', insertData))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 
@@ -33,7 +33,7 @@ export class ActivityGroupsService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getAllActivity))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 
@@ -44,7 +44,7 @@ export class ActivityGroupsService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getActivityById))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 
@@ -58,7 +58,7 @@ export class ActivityGroupsService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success'))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 
@@ -74,7 +74,7 @@ export class ActivityGroupsService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success', updateData))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message))
+      return Promise.reject(apiResponse(e.statusCode || status.BAD_REQUEST, e.message))
     }
   }
 }
