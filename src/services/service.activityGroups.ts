@@ -1,10 +1,10 @@
 import { StatusCodes as status } from 'http-status-codes'
+import { DeleteResult } from 'typeorm'
 
 import { ActivityGroups } from '@entities/entitie.activityGroups'
 import { Inject, Service, Repository } from '@helpers/helper.di'
 import { apiResponse, APIResponse } from '@helpers/helper.apiResponse'
 import { DTOActivityGroups, DTOActivityGroupsId } from '@dtos/dto.activityGroups'
-import { IsNull, Not } from 'typeorm'
 
 @Service()
 export class ActivityGroupsService {
@@ -14,12 +14,15 @@ export class ActivityGroupsService {
     try {
       if (!body.hasOwnProperty('title') || body.title === '') throw apiResponse(status.BAD_REQUEST, `title cannot be null`)
 
-      await this.model.insert({ title: body.title, email: body.email })
-      const getActivityRes: ActivityGroups = await this.model.findOne({ email: body.email }, { order: { id: 'DESC' } })
+      const todos: InstanceType<typeof ActivityGroups> = new ActivityGroups()
+      todos.title = body.title
+      todos.email = body.email
 
-      return Promise.resolve(apiResponse(status.CREATED, 'Success', getActivityRes))
+      const insertData: ActivityGroups = await this.model.save(todos)
+
+      return Promise.resolve(apiResponse(status.CREATED, 'Success', insertData))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
+      return Promise.reject(apiResponse(e.statusCode, e.message))
     }
   }
 
@@ -27,9 +30,9 @@ export class ActivityGroupsService {
     try {
       const getAllActivity: ActivityGroups[] = await this.model.find({})
 
-      return Promise.resolve(apiResponse(status.OK, 'Success', getAllActivity.length < 1 ? [] : getAllActivity))
+      return Promise.resolve(apiResponse(status.OK, 'Success', getAllActivity))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
+      return Promise.reject(apiResponse(e.statusCode, e.message))
     }
   }
 
@@ -40,7 +43,21 @@ export class ActivityGroupsService {
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getActivityById))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
+      return Promise.reject(apiResponse(e.statusCode, e.message))
+    }
+  }
+
+  async deleteActivityGroupsById(params: DTOActivityGroupsId): Promise<APIResponse> {
+    try {
+      const getActivityById: ActivityGroups = await this.model.findOne({ id: params.id })
+      if (!getActivityById) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
+
+      const deleteData: DeleteResult = await this.model.delete({ id: getActivityById.id })
+      if (!deleteData) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
+
+      return Promise.resolve(apiResponse(status.OK, 'Success'))
+    } catch (e: any) {
+      return Promise.reject(apiResponse(e.statusCode, e.message))
     }
   }
 
@@ -51,25 +68,12 @@ export class ActivityGroupsService {
 
       checkActivityId.title = body.title
 
-      await this.model.update({ id: checkActivityId.id }, { title: checkActivityId.title, email: checkActivityId.email })
-      const getActivityById: ActivityGroups = await this.model.findOne({ where: { id: checkActivityId.id } })
+      const updateData = await this.model.save(checkActivityId)
+      if (!updateData) throw apiResponse(status.NOT_FOUND, `Todo with ID ${params.id} Not Found`)
 
-      return Promise.resolve(apiResponse(status.OK, 'Success', getActivityById))
+      return Promise.resolve(apiResponse(status.OK, 'Success', updateData))
     } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
-    }
-  }
-
-  async deleteActivityGroupsById(params: DTOActivityGroupsId): Promise<APIResponse> {
-    try {
-      const getActivityById: ActivityGroups = await this.model.findOne({ id: params.id })
-      if (!getActivityById) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
-
-      await this.model.delete({ id: getActivityById.id })
-
-      return Promise.resolve(apiResponse(status.OK, 'Success'))
-    } catch (e: any) {
-      return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
+      return Promise.reject(apiResponse(e.statusCode, e.message))
     }
   }
 }

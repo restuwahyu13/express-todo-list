@@ -78,7 +78,7 @@ class App {
 
   private run(): void {
     const serverInfo: string = `Server is running on port: ${this.port}`
-    this.server.listen(this.port, () => console.info(serverInfo))
+    this.server.listen(this.port, '0.0.0.0', () => console.info(serverInfo))
   }
 
   public async main(): Promise<void> {

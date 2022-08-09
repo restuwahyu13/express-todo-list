@@ -22,5 +22,5 @@ RUN rm -rf node_modules \
   && npm i --loglevel verbose --no-audit --legacy-peer-deps \
   && npm i pm2 -g \
   && npm run build
-EXPOSE 3000
+EXPOSE 3030
 CMD npm run start:docker

@@ -23,7 +23,6 @@ export class TodosController {
 
   getAllTodos(): Handler {
     return async (req: Request, res: Response, next: NextFunction): Promise<OutgoingMessage> => {
-      console.log('req.params', req.params)
       try {
         const response: APIResponse = await this.service.getAllTodos(req)
         return res.status(response.statusCode).json(response)

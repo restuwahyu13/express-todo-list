@@ -12,7 +12,6 @@ export class ActivityGroupsController {
 
   createActivityGroups(): Handler {
     return async (req: Request, res: Response, next: NextFunction): Promise<OutgoingMessage> => {
-      console.log('createActivityGroups', req.body)
       try {
         const response: APIResponse = await this.service.createActivityGroups(rawParser(req.body))
         return res.status(response.statusCode).json(response)
