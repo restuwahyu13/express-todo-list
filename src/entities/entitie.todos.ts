@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
 import { ITodos } from '@interfaces/interface.todos'
 
 class DatabaseSchema {
+  @Index()
   @PrimaryGeneratedColumn()
   id!: number
 
