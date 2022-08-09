@@ -14,14 +14,14 @@ dk-deploy:
 dk-run:
 	${DOCKER} run --name node-todo -p 3000:3000 --restart always --env-file .env -d 705471/node-todo:latest
 
+dk-test:
+	${DOCKER} run -e API_URL=http://192.168.1.19:3000 monsterup/devcode-unit-test-1
+
 dc-up:
 	${COMPOSE} up -d --remove-orphans --build
 
 dc-down:
 	${COMPOSE} down
-
-dc-test:
-	${DOCKER} run -e API_URL=http://192.168.1.19:3000 monsterup/devcode-unit-test-1
 
 #############################
 # Application Teritory
