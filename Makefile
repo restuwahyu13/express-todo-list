@@ -5,20 +5,23 @@ DOCKER := docker
 COMPOSE := docker-compose
 
 dk-build:
-	${DOCKER} build -f Dockerfile --tag node-todo:latest --compress .
+	${DOCKER} build --tag node-todo:latest --add-host=host.docker.internal:host-gateway --compress .
 	${DOCKER} tag node-todo:latest 705471/node-todo:latest
 
 dk-deploy:
 	${DOCKER} push 705471/node-todo:latest
 
 dk-run:
-	${DOCKER} run --name node-todo -p 3000:3000 --add-host=host.docker.internal:host-gateway --restart always --env-file .env -d 705471/node-todo:latest
+	${DOCKER} run --name node-todo -p 3000:3000 --restart always --env-file .env -d 705471/node-todo:latest
 
 dc-up:
 	${COMPOSE} up -d --remove-orphans --build
 
 dc-down:
 	${COMPOSE} down
+
+dc-test:
+	${DOCKER} run -e API_URL=http://host.docker.internal:3000 monsterup/devcode-unit-test-1
 
 #############################
 # Application Teritory
