@@ -1,12 +1,16 @@
+import { STATUS_CODES } from 'http'
+
 export interface APIResponse {
+  statusCode: number
   status: string
   message: string
   data?: any
 }
 
-export const apiResponse = (status: string, message: string, data?: any): APIResponse => {
+export const apiResponse = (statusCode: number, message: string, data?: any): APIResponse => {
   return {
-    status: status,
+    statusCode: [200, 201].includes(statusCode) ? statusCode : statusCode,
+    status: [200, 201].includes(statusCode) ? 'Success' : STATUS_CODES[statusCode],
     message: message,
     data: data || {}
   }

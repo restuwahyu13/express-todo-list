@@ -5,10 +5,10 @@ class DatabaseSchema {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: true })
   title!: string
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: true })
   email!: string
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

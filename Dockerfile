@@ -3,7 +3,8 @@
 ######################
 FROM node:16.15.0-alpine as start
 USER ${USER}
-ADD ./package.*json ./
+ADD ./package.*json ./ \
+  .env ./
 ADD . ./
 
 #######################

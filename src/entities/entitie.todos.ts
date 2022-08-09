@@ -5,10 +5,10 @@ class DatabaseSchema {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: true })
   activity_group_id!: number
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: true })
   title!: string
 
   @Column({ type: 'boolean', nullable: true, default: true })

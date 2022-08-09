@@ -5,11 +5,11 @@ export class DTOTodos {
   @IsNumberString()
   id?: number
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'activity_group_id cannot be null' })
   @IsNumber()
-  activity_group_id!: number
+  activity_group_id!: any
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'title cannot be null' })
   @IsString()
   title!: string
 }
@@ -17,5 +17,5 @@ export class DTOTodos {
 export class DTOTodosId {
   @IsNotEmpty()
   @IsNumberString()
-  id!: number
+  id!: any
 }

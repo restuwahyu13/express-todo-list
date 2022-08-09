@@ -2,12 +2,12 @@ module.exports = {
   apps: [
     {
       name: 'node-todo',
-      script: 'dist/app.js',
+      script: 'dist/main.js',
       watch: false,
       env: {
         PORT: process.env.PORT,
         NODE_ENV: process.env.NODE_ENV,
-        NODE_OPTIONS: `--max-old-space-size=${process.env.MAX_OLD_SPACE}`
+        NODE_OPTIONS: `--max-old-space-size=${process.env.NODE_MAX_OLD_SPACE_SIZE}`
       },
       exec_mode: 'cluster',
       instances: 'max',

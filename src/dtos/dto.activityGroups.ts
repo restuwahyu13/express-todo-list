@@ -5,7 +5,7 @@ export class DTOActivityGroups {
   @IsNumberString()
   id?: number
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'title cannot be null' })
   @IsString()
   title!: string
 
@@ -17,6 +17,6 @@ export class DTOActivityGroups {
 
 export class DTOActivityGroupsId {
   @IsNotEmpty()
-  @IsNumberString()
-  id!: number
+  // @IsNumberString()
+  id!: any
 }

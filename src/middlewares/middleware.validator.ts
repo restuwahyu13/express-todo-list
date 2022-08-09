@@ -15,7 +15,7 @@ export function validator(MetaType: ClassConstructor<any>) {
     const object: Record<string, any> = plainToClass(MetaType, property)
     const errorsResponse: ValidationError[] = await validate(object)
 
-    const errorMessage = errorsResponse.map((val: ValidationError) => apiResponse('Error', Object.values(val.constraints)[0]))
+    const errorMessage = errorsResponse.map((val: ValidationError) => apiResponse(status.BAD_REQUEST, Object.values(val.constraints)[0]))
     if (errorMessage.length) {
       return res.status(status.BAD_REQUEST).json({ errors: errorMessage })
     }
