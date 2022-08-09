@@ -30,9 +30,15 @@ export class TodosService {
 
   async getAllTodos(req: Request): Promise<APIResponse> {
     try {
-      const getAllTodosResult: Todos[] = await this.model.find({})
+      let getAllTodosResult: Todos[]
 
-      return Promise.resolve(apiResponse(status.OK, 'Success', getAllTodosResult.length < 1 ? [] : getAllTodosResult))
+      if (req.query.hasOwnProperty('activity_group_id')) {
+        getAllTodosResult = await this.model.find({ activity_group_id: req.query.activity_group_id as any })
+      } else {
+        getAllTodosResult = await this.model.find({})
+      }
+
+      return Promise.resolve(apiResponse(status.OK, 'Success', getAllTodosResult))
     } catch (e: any) {
       return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
     }
@@ -42,6 +48,8 @@ export class TodosService {
     try {
       const getTodoById: Todos = await this.model.findOne({ id: params.id }, { order: { id: 'DESC' } })
       if (!getTodoById) throw apiResponse(status.NOT_FOUND, `Todo with ID ${params.id} Not Found`)
+
+      console.log('getTodoById', getTodoById)
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getTodoById))
     } catch (e: any) {
