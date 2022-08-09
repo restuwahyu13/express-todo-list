@@ -21,7 +21,7 @@ dc-down:
 	${COMPOSE} down
 
 dc-test:
-	${DOCKER} run -e API_URL=http://host.docker.internal:3000 monsterup/devcode-unit-test-1
+	${DOCKER} run -e API_URL=http://192.168.1.19:3000 monsterup/devcode-unit-test-1
 
 #############################
 # Application Teritory

@@ -26,9 +26,8 @@ export class ActivityGroupsService {
   async getAllActivityGroups(): Promise<APIResponse> {
     try {
       const getAllActivity: ActivityGroups[] = await this.model.find({})
-      if (!getAllActivity.length) throw apiResponse(status.NOT_FOUND, `Activity data Not Found`)
 
-      return Promise.resolve(apiResponse(status.OK, 'Success', getAllActivity))
+      return Promise.resolve(apiResponse(status.OK, 'Success', getAllActivity.length < 1 ? [] : getAllActivity))
     } catch (e: any) {
       return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
     }
@@ -38,8 +37,6 @@ export class ActivityGroupsService {
     try {
       const getActivityById: ActivityGroups = await this.model.findOne({ id: params.id })
       if (!getActivityById) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
-
-      console.log('getActivityById', getActivityById)
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getActivityById))
     } catch (e: any) {

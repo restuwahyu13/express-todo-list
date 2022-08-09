@@ -30,15 +30,9 @@ export class TodosService {
 
   async getAllTodos(req: Request): Promise<APIResponse> {
     try {
-      let getAllTodosResult: Todos[]
+      const getAllTodosResult: Todos[] = await this.model.find({})
 
-      if (Object.keys(req.params).length) {
-        getAllTodosResult = await this.model.find({})
-      } else {
-        getAllTodosResult = await this.model.find({ id: req.params['id'] as any })
-      }
-
-      return Promise.resolve(apiResponse(status.OK, 'Success', getAllTodosResult))
+      return Promise.resolve(apiResponse(status.OK, 'Success', getAllTodosResult.length < 1 ? [] : getAllTodosResult))
     } catch (e: any) {
       return Promise.reject(apiResponse(e.statusCode, e.message || e.message))
     }
