@@ -49,8 +49,6 @@ export class TodosService {
       const getTodoById: Todos = await this.model.findOne({ id: params.id }, { order: { id: 'DESC' } })
       if (!getTodoById) throw apiResponse(status.NOT_FOUND, `Todo with ID ${params.id} Not Found`)
 
-      console.log('getTodoById', getTodoById)
-
       return Promise.resolve(apiResponse(status.OK, 'Success', getTodoById))
     } catch (e: any) {
       return Promise.reject(apiResponse(e.statusCode, e.message || e.message))

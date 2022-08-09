@@ -41,6 +41,7 @@
     "npm": ">=6"
   },
   "dependencies": {
+    "caniuse-lite": "^1.0.30001367",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "class-validators": "^1.0.1",

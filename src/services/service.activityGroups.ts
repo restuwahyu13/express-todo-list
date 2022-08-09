@@ -15,7 +15,7 @@ export class ActivityGroupsService {
       if (!body.hasOwnProperty('title') || body.title === '') throw apiResponse(status.BAD_REQUEST, `title cannot be null`)
 
       await this.model.insert({ title: body.title, email: body.email })
-      const getActivityRes: ActivityGroups = await this.model.findOne({ email: body.email }, { select: ['id', 'title', 'email', 'created_at', 'updated_at'], order: { id: 'DESC' } })
+      const getActivityRes: ActivityGroups = await this.model.findOne({ email: body.email }, { order: { id: 'DESC' } })
 
       return Promise.resolve(apiResponse(status.CREATED, 'Success', getActivityRes))
     } catch (e: any) {
