@@ -25,6 +25,7 @@ export class TodosService {
       todos.activity_group_id = body.activity_group_id
 
       const insertData: Todos = await this.model.save(todos)
+      if (!insertData) throw apiResponse(status.FORBIDDEN, `Insert new todo failed`)
 
       return Promise.resolve(apiResponse(status.CREATED, 'Success', insertData))
     } catch (e: any) {

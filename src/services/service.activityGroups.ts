@@ -19,6 +19,7 @@ export class ActivityGroupsService {
       todos.email = body.email
 
       const insertData: ActivityGroups = await this.model.save(todos)
+      if (!insertData) throw apiResponse(status.FORBIDDEN, `Insert new Activity failed`)
 
       return Promise.resolve(apiResponse(status.CREATED, 'Success', insertData))
     } catch (e: any) {
