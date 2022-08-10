@@ -23,17 +23,29 @@ class App {
   private server: Server
   private env: string
   private port: number
+  private pathEntitiesDir: string
 
   constructor() {
     this.app = express()
     this.server = http.createServer(this.app)
     this.env = process.env.NODE_ENV as any
     this.port = process.env.PORT as any
+    this.pathEntitiesDir = !['production', 'staging'].includes(process.env.NODE_ENV) ? 'src/entities/*.ts' : 'dist/entities/*.js'
   }
 
   private async connection(): Promise<Connection> {
     useContainer(Context)
-    return createConnection()
+    return createConnection({
+      type: 'mysql',
+      host: process.env.MYSQL_HOST,
+      username: process.env.MYSQL_USER,
+      password: process.env.MYSQL_PASSWORD,
+      database: process.env.MYSQL_DBNAME,
+      entities: [this.pathEntitiesDir],
+      synchronize: !['production', 'staging'].includes(process.env.NODE_ENV) ? true : false,
+      logger: !['production', 'staging'].includes(process.env.NODE_ENV) ? 'advanced-console' : undefined,
+      logging: !['production', 'staging'].includes(process.env.NODE_ENV) ? true : false
+    })
   }
 
   private config(): void {
@@ -78,7 +90,7 @@ class App {
 
   private run(): void {
     const serverInfo: string = `Server is running on port: ${this.port}`
-    this.server.listen(this.port, '0.0.0.0', () => console.info(serverInfo))
+    this.server.listen(this.port, () => console.info(serverInfo))
   }
 
   public async main(): Promise<void> {

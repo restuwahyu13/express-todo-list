@@ -1,10 +1,10 @@
 const path = require('path')
 
 const pathEntitiesDir = !['production', 'staging'].includes(process.env.NODE_ENV) ? 'src/entities/*.ts' : 'dist/entities/*.js'
-const pathMigrationDir = !['production', 'staging'].includes(process.env.NODE_ENV) ? 'src/database/migrations' : 'dist/database/migrations'
+const pathMigrationDir = !['production', 'staging'].includes(process.env.NODE_ENV) ? 'src/database/migrations/*.ts' : 'dist/database/migrations/*.js'
 
-const entitiesDir = path.resolve(process.cwd(), pathEntitiesDir)
-const migrationsDir = path.resolve(process.cwd(), pathMigrationDir)
+const entitiesDir = path.join(__dirname, pathEntitiesDir)
+const migrationsDir = path.join(__dirname, pathMigrationDir)
 
 module.exports = {
   type: 'mysql',

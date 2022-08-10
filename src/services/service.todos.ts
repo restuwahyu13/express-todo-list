@@ -23,6 +23,7 @@ export class TodosService {
       const todos: InstanceType<typeof Todos> = new Todos()
       todos.title = body.title
       todos.activity_group_id = body.activity_group_id
+      todos.priority = 'very-high'
 
       const insertData: Todos = await this.model.save(todos)
       if (!insertData) throw apiResponse(status.FORBIDDEN, `Insert new todo failed`)

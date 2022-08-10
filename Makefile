@@ -5,7 +5,7 @@ DOCKER := docker
 COMPOSE := docker-compose
 
 dk-build:
-	${DOCKER} build --tag node-todo:latest --add-host=host.docker.internal:host-gateway --compress .
+	${DOCKER} build --tag node-todo:latest --compress .
 	${DOCKER} tag node-todo:latest 705471/node-todo:latest
 
 dk-deploy:

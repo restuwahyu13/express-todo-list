@@ -9,16 +9,12 @@ export class todos1659966363217 implements MigrationInterface {
           {
             name: 'id',
             type: 'int',
-            isPrimary: true,
-            isUnique: true,
-            isNullable: false,
-            unsigned: true
+            isPrimary: true
           },
           {
             name: 'activity_group_id',
             type: 'int',
-            isNullable: false,
-            unsigned: true
+            isNullable: false
           },
           {
             name: 'title',
@@ -34,8 +30,7 @@ export class todos1659966363217 implements MigrationInterface {
           {
             name: 'priority',
             type: 'varchar',
-            isNullable: true,
-            default: 'very-high'
+            isNullable: true
           },
           {
             name: 'created_at',

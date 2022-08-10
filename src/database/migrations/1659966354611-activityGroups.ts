@@ -9,20 +9,17 @@ export class activityGroups1659966354611 implements MigrationInterface {
           {
             name: 'id',
             type: 'int',
-            isPrimary: true,
-            isUnique: true,
-            unsigned: true,
-            isNullable: false
+            isPrimary: true
           },
           {
             name: 'title',
             type: 'varchar',
-            isNullable: false
+            isNullable: true
           },
           {
             name: 'email',
             type: 'varchar',
-            isNullable: false
+            isNullable: true
           },
           {
             name: 'created_at',
