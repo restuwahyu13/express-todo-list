@@ -14,12 +14,12 @@
     "build": "npm run cleanup && npm run ts-bin:prod",
     "dev": "DEBUG=* npm run ts-bin:dev",
     "seed:config": "npm run typeorm:seeding config",
-    "seed:run": "cross-env NODE_ENV=development npm run ts-bin ./node_modules/typeorm-seeding/dist/cli.js seed",
-    "seed:runrollmig": "cross-env NODE_ENV=development npm run mig:rollback && npm run mig:latest && npm run seed:run",
-    "seed:runmig": "cross-env NODE_ENV=development npm run mig:latest && npm run seed:run",
-    "mig:rollback": "cross-env NODE_ENV=development npm run typeorm:cli schema:drop",
-    "mig:latest": "cross-env NODE_ENV=development npm run typeorm:cli migration:run",
-    "mig:list": "cross-env NODE_ENV=development npm run typeorm:cli migration:show",
+    "seed:run": "npm run ts-bin ./node_modules/typeorm-seeding/dist/cli.js seed",
+    "seed:runrollmig": "npm run mig:rollback && npm run mig:latest && npm run seed:run",
+    "seed:runmig": "npm run mig:latest && npm run seed:run",
+    "mig:rollback": "npm run typeorm:cli schema:drop",
+    "mig:latest": "npm run typeorm:cli migration:run",
+    "mig:list": "npm run typeorm:cli migration:show",
     "mig:make": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create --name"
   },
   "author": {
