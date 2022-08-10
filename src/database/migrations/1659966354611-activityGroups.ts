@@ -4,7 +4,7 @@ export class activityGroups1659966354611 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'activity_groups',
+        name: 'activities',
         columns: [
           {
             name: 'id',
@@ -47,6 +47,6 @@ export class activityGroups1659966354611 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('activity_groups')
+    await queryRunner.dropTable('activities')
   }
 }

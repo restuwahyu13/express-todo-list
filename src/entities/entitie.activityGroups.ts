@@ -23,4 +23,4 @@ class DatabaseSchema {
 }
 
 @Entity()
-export class ActivityGroups extends DatabaseSchema implements IActivityGroups {}
+export class Activities extends DatabaseSchema implements IActivityGroups {}

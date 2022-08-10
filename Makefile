@@ -15,7 +15,7 @@ dk-run:
 	${DOCKER} run --name node-todo -p 3030:3030 --restart always --env-file .env -d 705471/node-todo:latest
 
 dk-test:
-	${DOCKER} run -e API_URL=http://192.168.1.19:3030 monsterup/devcode-unit-test-1
+	${DOCKER} run -e API_URL=https://ae14-2001-448a-2082-2e1a-bb2d-c09-bd52-ec05.ap.ngrok.io monsterup/devcode-unit-test-1
 
 dc-up:
 	${COMPOSE} up -d --remove-orphans --build

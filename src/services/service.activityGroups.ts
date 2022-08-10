@@ -1,24 +1,24 @@
 import { StatusCodes as status } from 'http-status-codes'
 import { DeleteResult } from 'typeorm'
 
-import { ActivityGroups } from '@entities/entitie.activityGroups'
+import { Activities } from '@entities/entitie.activityGroups'
 import { Inject, Service, Repository } from '@helpers/helper.di'
 import { apiResponse, APIResponse } from '@helpers/helper.apiResponse'
 import { DTOActivityGroups, DTOActivityGroupsId } from '@dtos/dto.activityGroups'
 
 @Service()
 export class ActivityGroupsService {
-  constructor(@Inject('ActivityGroupsModel') private model: Repository<ActivityGroups>) {}
+  constructor(@Inject('ActivityGroupsModel') private model: Repository<Activities>) {}
 
   async createActivityGroups(body: DTOActivityGroups): Promise<APIResponse> {
     try {
       if (!body.hasOwnProperty('title') || body.title === '') throw apiResponse(status.BAD_REQUEST, `title cannot be null`)
 
-      const todos: InstanceType<typeof ActivityGroups> = new ActivityGroups()
+      const todos: InstanceType<typeof Activities> = new Activities()
       todos.title = body.title
       todos.email = body.email
 
-      const insertData: ActivityGroups = await this.model.save(todos)
+      const insertData: Activities = await this.model.save(todos)
       if (!insertData) throw apiResponse(status.FORBIDDEN, `Insert new Activity failed`)
 
       return Promise.resolve(apiResponse(status.CREATED, 'Success', insertData))
@@ -29,7 +29,7 @@ export class ActivityGroupsService {
 
   async getAllActivityGroups(): Promise<APIResponse> {
     try {
-      const getAllActivity: ActivityGroups[] = await this.model.find({})
+      const getAllActivity: Activities[] = await this.model.find({})
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getAllActivity))
     } catch (e: any) {
@@ -39,7 +39,7 @@ export class ActivityGroupsService {
 
   async getActivityGroupsById(params: DTOActivityGroupsId): Promise<APIResponse> {
     try {
-      const getActivityById: ActivityGroups = await this.model.findOne({ id: params.id })
+      const getActivityById: Activities = await this.model.findOne({ id: params.id })
       if (!getActivityById) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
 
       return Promise.resolve(apiResponse(status.OK, 'Success', getActivityById))
@@ -50,7 +50,7 @@ export class ActivityGroupsService {
 
   async deleteActivityGroupsById(params: DTOActivityGroupsId): Promise<APIResponse> {
     try {
-      const getActivityById: ActivityGroups = await this.model.findOne({ id: params.id })
+      const getActivityById: Activities = await this.model.findOne({ id: params.id })
       if (!getActivityById) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
 
       const deleteData: DeleteResult = await this.model.delete({ id: getActivityById.id })
@@ -64,7 +64,7 @@ export class ActivityGroupsService {
 
   async updateActivityGroupsById(params: DTOActivityGroupsId, body: DTOActivityGroups): Promise<APIResponse> {
     try {
-      const checkActivityId: ActivityGroups = await this.model.findOne({ id: params.id })
+      const checkActivityId: Activities = await this.model.findOne({ id: params.id })
       if (!checkActivityId) throw apiResponse(status.NOT_FOUND, `Activity with ID ${params.id} Not Found`)
 
       checkActivityId.title = body.title

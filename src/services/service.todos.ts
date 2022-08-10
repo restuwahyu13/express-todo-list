@@ -3,21 +3,21 @@ import { Request } from 'express'
 import { DeleteResult } from 'typeorm'
 
 import { Todos } from '@entities/entitie.todos'
-import { ActivityGroups } from '@entities/entitie.activityGroups'
+import { Activities } from '@entities/entitie.activityGroups'
 import { Inject, Service, Repository } from '@helpers/helper.di'
 import { apiResponse, APIResponse } from '@helpers/helper.apiResponse'
 import { DTOTodos, DTOTodosId } from '@dtos/dto.todos'
 
 @Service()
 export class TodosService {
-  constructor(@Inject('TodosModel') private model: Repository<Todos>, @Inject('ActivityGroupsModel') private activityGroups: Repository<ActivityGroups>) {}
+  constructor(@Inject('TodosModel') private model: Repository<Todos>, @Inject('ActivityGroupsModel') private activityGroups: Repository<Activities>) {}
 
   async createTodos(body: DTOTodos): Promise<APIResponse> {
     try {
       if (!body.hasOwnProperty('title') || body.title === '') throw apiResponse(status.BAD_REQUEST, `title cannot be null`)
       else if (!body.hasOwnProperty('activity_group_id') || body.activity_group_id === '') throw apiResponse(status.BAD_REQUEST, `activity_group_id cannot be null`)
 
-      const checkActivityId: ActivityGroups = await this.activityGroups.findOne({ id: body.activity_group_id })
+      const checkActivityId: Activities = await this.activityGroups.findOne({ id: body.activity_group_id })
       if (!checkActivityId) throw apiResponse(status.NOT_FOUND, `Activity with activity_group_id ${body.activity_group_id} Not Found`)
 
       const todos: InstanceType<typeof Todos> = new Todos()
