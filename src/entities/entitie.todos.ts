@@ -6,7 +6,7 @@ class DatabaseSchema {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'int', unsigned: true, nullable: false })
   activity_group_id!: number
 
   @Column({ type: 'varchar', nullable: true })

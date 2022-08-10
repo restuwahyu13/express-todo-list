@@ -9,17 +9,21 @@ export class todos1659966363217 implements MigrationInterface {
           {
             name: 'id',
             type: 'int',
-            isPrimary: true
+            isPrimary: true,
+            isNullable: false,
+            isGenerated: true,
+            generationStrategy: 'increment'
           },
           {
             name: 'activity_group_id',
             type: 'int',
-            isNullable: false
+            isNullable: false,
+            unsigned: true
           },
           {
             name: 'title',
             type: 'varchar',
-            isNullable: false
+            isNullable: true
           },
           {
             name: 'is_active',

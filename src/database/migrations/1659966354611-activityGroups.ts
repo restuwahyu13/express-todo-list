@@ -9,7 +9,10 @@ export class activityGroups1659966354611 implements MigrationInterface {
           {
             name: 'id',
             type: 'int',
-            isPrimary: true
+            isPrimary: true,
+            isNullable: false,
+            isGenerated: true,
+            generationStrategy: 'increment'
           },
           {
             name: 'title',
