@@ -1,17 +1,30 @@
-import { STATUS_CODES } from 'http'
+import { StatusCodes as status } from 'http-status-codes'
 
-export interface APIResponse {
-  statusCode: number
-  status: string
-  message: string
-  data?: any
+export interface ApiResponse {
+	stat_code?: number
+	stat_message?: string
+	err_message?: any
+	data?: any
+	pagination?: Record<string, any>
 }
 
-export const apiResponse = (statusCode: number, message: string, data?: any): APIResponse => {
-  return {
-    statusCode: statusCode,
-    status: [200, 201].includes(statusCode) ? 'Success' : STATUS_CODES[statusCode],
-    message: message,
-    data: data || {}
-  }
+export const apiResponse = (configs: ApiResponse): ApiResponse => {
+	for (let i of Object.keys(configs)) {
+		if (configs[i] == undefined) {
+			delete configs[i]
+		}
+	}
+
+	if (configs.err_message && typeof configs.err_message !== 'string') {
+		if (configs.err_message.hasOwnProperty('err_message')) {
+			configs = configs.err_message
+		}
+		console.trace(configs.err_message)
+	}
+
+	if (!configs.stat_message && !configs.err_message) {
+		configs.err_message = 'Internal server error'
+	}
+
+	return { stat_code: configs.stat_code ?? status.INTERNAL_SERVER_ERROR, ...configs }
 }
